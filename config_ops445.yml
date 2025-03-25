@@ -1,0 +1,58 @@
+- name: configure ops445
+  hosts: vmlab
+  user: student
+  become: yes
+  vars:
+    apache_version: 2.6
+    motd_warning: "WARNING: used by ICT faculty/students only.\n"
+    testserver: yes
+  tasks:
+    - name: Update Apache (httpd)
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Install EPEL repo if not already installed
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Remove tree package if installed
+      yum:
+        name: tree
+        state: absent
+
+    - name: Set system hostname
+      ansible.builtin.hostname:
+        name: seimina
+
+    - name: User with sudo access
+      user:
+        name: seimina
+        groups: wheel
+        append: yes
+
+    - name: Allow passwordless sudo for the new user
+      copy:
+        dest: "/etc/sudoers.d/seimina"
+        content: "seimina ALL=(ALL) NOPASSWD: ALL"
+
+    - name: ssh directory for the new user
+      file:
+        path: "/home/seimina/.ssh"
+        state: directory
+        owner: "seimina"
+        group: "seimina"
+
+
+    - name: Copy SSH public key for passwordless login
+      copy:
+        src: ~/.ssh/id_rsa.pub
+        dest: "/home/seimina/.ssh/authorized_keys"
+
+
+    - name: Create directory structure for labs
+      file:
+        path: "/home/seimina/ops445/lab{{ item }}"
+        state: directory
+      loop: "{{ range(1,9) }}"

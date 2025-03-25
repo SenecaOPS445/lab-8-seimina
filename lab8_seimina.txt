@@ -1,0 +1,43 @@
+
+PLAY [configure ops445] ********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [vmlab]
+
+TASK [Update Apache (httpd)] ***************************************************
+ok: [vmlab]
+
+TASK [Install EPEL repo if not already installed] ******************************
+ok: [vmlab]
+
+TASK [Remove tree package if installed] ****************************************
+ok: [vmlab]
+
+TASK [Set system hostname] *****************************************************
+ok: [vmlab]
+
+TASK [User with sudo access] ***************************************************
+ok: [vmlab]
+
+TASK [Allow passwordless sudo for the new user] ********************************
+ok: [vmlab]
+
+TASK [ssh directory for the new user] ******************************************
+ok: [vmlab]
+
+TASK [Copy SSH public key for passwordless login] ******************************
+ok: [vmlab]
+
+TASK [Create directory structure for labs] *************************************
+ok: [vmlab] => (item=1)
+ok: [vmlab] => (item=2)
+ok: [vmlab] => (item=3)
+ok: [vmlab] => (item=4)
+ok: [vmlab] => (item=5)
+ok: [vmlab] => (item=6)
+ok: [vmlab] => (item=7)
+ok: [vmlab] => (item=8)
+
+PLAY RECAP *********************************************************************
+vmlab                      : ok=10   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
